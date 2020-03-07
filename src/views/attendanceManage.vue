@@ -30,7 +30,7 @@
         <!--新增弹窗-->
         <Modal
                 v-model="addAttendanceModal"
-                title="考勤信心"
+                title="考勤信息"
                 @on-ok="addAttendance"
                 @on-cancel="closeAddAttendanceModal">
             <Form ref="addAttendanceModal" :model="attendanceAdd" :rules="attendanceRule" :label-width="100">

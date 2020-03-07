@@ -30,7 +30,7 @@
         <!--新增弹窗-->
         <Modal
                 v-model="addRuleModal"
-                title="奖惩信心"
+                title="奖惩信息"
                 @on-ok="addRule"
                 @on-cancel="closeAddRuleModal">
             <Form ref="addRuleModal" :model="ruleAdd" :rules="ruleRule" :label-width="100">

@@ -2,7 +2,7 @@
     <div>
         <Card style="width:100%;">
             <div class="button-group">
-                <Button type="primary" @click="addGradeModal=true">增加</Button>
+                <Button type="primary" @click="addGradeModal=true">新增</Button>
             </div>
             <Table :columns="columns_name" :data="gradeList" style="margin-top: 10px"></Table>
             <div style="margin: 10px;overflow: hidden">
