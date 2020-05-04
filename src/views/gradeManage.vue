@@ -162,7 +162,8 @@
                 let params = {
                     id: this.formValidate1.gradeIdEdit,
                     gradeNo: this.formValidate1.gradeNoEdit,
-                    gradeName: this.formValidate1.gradeNameEdit
+                    gradeName: this.formValidate1.gradeNameEdit,
+                    updateUser: JSON.parse(window.sessionStorage.getItem("user")).id
                 }
                 this.$http({
                     url: url,
@@ -204,7 +205,8 @@
                 let url = this.CommonUtil.LOCAL_BASE_URL + 'grade/create'
                 let params = {
                     gradeNo: this.formValidate.gradeNo,
-                    gradeName: this.formValidate.gradeName
+                    gradeName: this.formValidate.gradeName,
+                    createUser: JSON.parse(window.sessionStorage.getItem("user")).id
                 }
                 let paramFormData = new FormData()
                 paramFormData.append('jsonObject', JSON.stringify(params))

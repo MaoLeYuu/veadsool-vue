@@ -13,6 +13,7 @@
           <img src="../image/election.png">
         </div>
         <div class>
+          <input v-model="username" style=" width: 60px; height: 40px" disabled="true">
           <Icon  :style="{margin: '0 20px'}" type="ios-contacts-outline"  size="40"/>
         </div>
       </Header>
@@ -35,6 +36,10 @@
               <Icon type="ios-settings"></Icon>
               <span>班级管理</span>
             </MenuItem>
+            <MenuItem name="1-5" to="/studentCreditsFlowManage">
+              <Icon type="ios-book"></Icon>
+              <span>学分管理</span>
+            </MenuItem>
           </Menu>
         </Sider>
         <Content>
@@ -51,6 +56,7 @@
 export default {
   data() {
     return {
+      username:"",
       isCollapsed: false,
       height: 0,
       minHeight: ""
@@ -61,6 +67,7 @@ export default {
     window.onresize = function() {
       this.setTableHeight();
     };
+    this.username = JSON.parse(window.sessionStorage.getItem("user")).name
   },
   computed: {
     rotateIcon() {

@@ -177,6 +177,7 @@
                     ruleFlag: this.attendanceEdit.ruleFlag,
                     ruleType: 1,
                     changePoints: this.attendanceEdit.changePoints,
+                    updateUser: JSON.parse(window.sessionStorage.getItem("user")).id
                 }
                 this.$http({
                     url: url,
@@ -221,6 +222,7 @@
                     ruleFlag: this.attendanceAdd.ruleFlag,
                     ruleType: 1,
                     changePoints: this.attendanceAdd.changePoints,
+                    createUser: JSON.parse(window.sessionStorage.getItem("user")).id
                 }
                 this.$http({
                     url: url,

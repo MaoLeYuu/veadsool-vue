@@ -6,7 +6,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: () => import('./views/home.vue'),
       children: [
@@ -14,11 +14,6 @@ export default new Router({
           path: '/attendanceManage',
           name: 'attendanceManage',
           component: () => import('./views/attendanceManage.vue')
-          // children: [{
-          //   path: '/activityManage/activityDetail',
-          //   name: 'activityDetail',
-          //   component: () => import('./views/activityDetail.vue')
-          // }]
         },
         {
           path: '/studentManage',
@@ -34,8 +29,17 @@ export default new Router({
           path: '/ruleManage',
           name: 'ruleManage',
           component: () => import('./views/ruleManage.vue')
+        },
+        {
+          path: '/studentCreditsFlowManage',
+          name: 'studentCreditsFlowManage',
+          component: () => import('./views/studentCreditsFlowManage.vue')
         }
       ]
-    },
+    },{
+      path: '/',
+      name: 'login',
+      component: () => import('./views/login.vue'),
+    }
   ]
 })

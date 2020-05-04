@@ -3,8 +3,9 @@
         <Card style="width:100%;">
             <div class="button-group">
                 <Button type="primary" @click="startAddStudentModal">新增</Button>
+                <Button type="primary" @click="archiveStudentPoint">统计成绩</Button>
             </div>
-            <Table :columns="columns_name" :data="studentList"></Table>
+            <Table border ref="selection" :columns="columns_name" :data="studentList"></Table>
 
         </Card>
         <!--增加学生弹窗-->
@@ -22,7 +23,8 @@
                 </FormItem>
                 <Form-item label="班级" prop="gradeId">
                     <i-select v-model="formValidate1.gradeId" placeholder="请选择">
-                        <i-option v-for="item in gradeList" :key="item" :value="item.id">{{ item.gradeName }}</i-option>
+                        <i-option v-for="item in gradeList" :key="item.value" :value="item.value">{{ item.label }}
+                        </i-option>
                     </i-select>
                 </Form-item>
             </Form>
@@ -43,8 +45,27 @@
                 </FormItem>
                 <Form-item label="班级" prop="grade">
                     <i-select v-model="formValidate2.gradeId" placeholder="请选择">
-                        <i-option v-for="item in gradeList" :key="item" :value="item.value">{{ item.label }}</i-option>
+                        <i-option v-for="item in gradeList" :key="item.value" :value="item.value">{{ item.label }}
+                        </i-option>
                     </i-select>
+                </Form-item>
+            </Form>
+        </Modal>
+        <!--录入学生成绩弹窗-->
+        <Modal
+                v-model="addStudentFileModal"
+                title="学生信息"
+                @on-ok="addStudentFile"
+                @on-cancel="closeAddStudentFileModal">
+            <Form ref="formValidate" :model="studentFile" :rules="ruleStudentFile" :label-width="120">
+                <FormItem label="文化科成绩" prop="culturalSubjectScore">
+                    <Input v-model="studentFile.culturalSubjectScore" placeholder="请输入成绩"/>
+                </FormItem>
+                <FormItem label="考勤成绩" prop="attendanceScore">
+                    <Input v-model="studentFile.attendanceScore" disabled/>
+                </FormItem>
+                <Form-item label="奖惩成绩" prop="otherScore">
+                    <Input v-model="studentFile.otherScore" disabled/>
                 </Form-item>
             </Form>
         </Modal>
@@ -57,10 +78,16 @@
             return {
                 addStudentModal: false,
                 editStudentModal: false,
+                addStudentFileModal: false,
                 formValidate1: {
                     studentNo: "",
                     studentName: "",
                     gradeId: ''
+                },
+                studentFile: {
+                    culturalSubjectScore: "",
+                    attendanceScore: "",
+                    otherScore: ""
                 },
                 ruleValidate1: {
                     studentNo: [
@@ -71,6 +98,11 @@
                     ],
                     grade: [
                         {required: true, message: '请选择班级', trigger: 'change'}
+                    ]
+                },
+                ruleStudentFile:{
+                    culturalSubjectScore: [
+                        {required: true, message: '文化课成绩不能为空', trigger: 'blur'}
                     ]
                 },
                 formValidate2: {
@@ -90,6 +122,11 @@
                     ]
                 },
                 columns_name: [
+                    {
+                        type: 'selection',
+                        width: 60,
+                        align: 'center'
+                    },
                     {
                         title: '学号',
                         key: 'studentNo',
@@ -159,7 +196,8 @@
                 let params = {
                     studentNo: this.formValidate1.studentNo,
                     studentName: this.formValidate1.studentName,
-                    gradeId: this.formValidate1.gradeId
+                    gradeId: this.formValidate1.gradeId,
+                    createUser: JSON.parse(window.sessionStorage.getItem("user")).id
                 }
                 this.$http({
                     url: url,
@@ -246,13 +284,27 @@
                 this.formValidate2.gradeId = params.row.gradeId;
                 this.editStudentModal = true
             },
+            archiveStudentPoint() {
+                let rows = this.$refs.selection.getSelection();
+                if (rows.length > 1) {
+                    this.$Message.error("只能操作一条数据");
+                }
+                if (rows.length === 0) {
+                    this.$Message.error("请选择数据");
+                } else if (rows.length > 1) {
+                    this.$Message.error("只能操作一条数据");
+                } else {
+                    this.addStudentFileModal = true;
+                }
+            },
             editStudent() {
                 let url = this.CommonUtil.LOCAL_BASE_URL + 'student/update'
                 let params = {
                     studentNo: this.formValidate2.studentNo,
                     studentName: this.formValidate2.studentName,
                     gradeId: this.formValidate2.gradeId,
-                    id: this.formValidate2.id
+                    id: this.formValidate2.id,
+                    updateUser: JSON.parse(window.sessionStorage.getItem("user")).id
                 }
                 this.$http({
                     url: url,
@@ -266,6 +318,12 @@
             },
             closeEditStudentModal() {
                 this.editStudentModal = false
+            },
+            addStudentFile(){
+
+            },
+            closeAddStudentFileModal(){
+                this.addStudentFileModal = false
             }
         },
         created() {

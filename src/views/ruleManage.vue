@@ -177,6 +177,7 @@
                     ruleFlag: this.ruleEdit.ruleFlag,
                     ruleType: 1,
                     changePoints: this.ruleEdit.changePoints,
+                    updateUser: JSON.parse(window.sessionStorage.getItem("user")).id
                 }
                 this.$http({
                     url: url,
@@ -221,6 +222,7 @@
                     ruleFlag: this.ruleAdd.ruleFlag,
                     ruleType: 2,
                     changePoints: this.ruleAdd.changePoints,
+                    createUser: JSON.parse(window.sessionStorage.getItem("user")).id
                 }
                 this.$http({
                     url: url,
