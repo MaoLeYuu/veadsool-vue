@@ -42,7 +42,6 @@
         methods: {
             handleSubmit() {
                 let url = this.CommonUtil.LOCAL_BASE_URL + 'user/login';
-                debugger
                 let params = {
                     phoneNumber: this.loginData.username,
                     password: this.loginData.password

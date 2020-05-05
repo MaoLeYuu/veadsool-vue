@@ -58,15 +58,10 @@
                 @on-ok="addStudentFile"
                 @on-cancel="closeAddStudentFileModal">
             <Form ref="formValidate" :model="studentFile" :rules="ruleStudentFile" :label-width="120">
+                <Input v-model="studentFile.studentId" style="display: none"/>
                 <FormItem label="文化科成绩" prop="culturalSubjectScore">
                     <Input v-model="studentFile.culturalSubjectScore" placeholder="请输入成绩"/>
                 </FormItem>
-                <FormItem label="考勤成绩" prop="attendanceScore">
-                    <Input v-model="studentFile.attendanceScore" disabled/>
-                </FormItem>
-                <Form-item label="奖惩成绩" prop="otherScore">
-                    <Input v-model="studentFile.otherScore" disabled/>
-                </Form-item>
             </Form>
         </Modal>
     </div>
@@ -86,8 +81,7 @@
                 },
                 studentFile: {
                     culturalSubjectScore: "",
-                    attendanceScore: "",
-                    otherScore: ""
+                    studentId:""
                 },
                 ruleValidate1: {
                     studentNo: [
@@ -284,7 +278,7 @@
                 this.formValidate2.gradeId = params.row.gradeId;
                 this.editStudentModal = true
             },
-            archiveStudentPoint() {
+            archiveStudentPoint(params) {
                 let rows = this.$refs.selection.getSelection();
                 if (rows.length > 1) {
                     this.$Message.error("只能操作一条数据");
@@ -294,6 +288,7 @@
                 } else if (rows.length > 1) {
                     this.$Message.error("只能操作一条数据");
                 } else {
+                    this.studentFile.studentId = rows[0].id
                     this.addStudentFileModal = true;
                 }
             },
@@ -320,7 +315,21 @@
                 this.editStudentModal = false
             },
             addStudentFile(){
-
+                let url = this.CommonUtil.LOCAL_BASE_URL + 'studentFiles/create'
+                let params = {
+                    studentId: this.studentFile.studentId,
+                    culturalSubjectScore: this.studentFile.culturalSubjectScore,
+                    createUser: JSON.parse(window.sessionStorage.getItem("user")).id
+                }
+                this.$http({
+                    url: url,
+                    method: 'post',
+                    data: params,
+                    withCredentials: true,//表示跨域请求时是否需要使用凭证
+                }).then(res => {
+                    this.$Message.info(res.data.text)
+                    this.reload()
+                })
             },
             closeAddStudentFileModal(){
                 this.addStudentFileModal = false

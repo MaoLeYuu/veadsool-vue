@@ -14,11 +14,11 @@
         </div>
         <div class>
           <input v-model="username" style=" width: 60px; height: 40px" disabled="true">
-          <Icon  :style="{margin: '0 20px'}" type="ios-contacts-outline"  size="40"/>
+          <Icon  @click.native="loginOut" :style="{margin: '0 20px'}" type="md-exit"  size="40" />
         </div>
       </Header>
       <Layout>
-        <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
+        <Sider ref="side1" hide-trigger collapsible :collapsed-width="120" v-model="isCollapsed">
           <Menu active-name="1-1" theme="dark" width="auto" :class="menuitemClasses">
             <MenuItem name="1-1" to="/attendanceManage">
               <Icon type="ios-navigate"></Icon>
@@ -39,6 +39,10 @@
             <MenuItem name="1-5" to="/studentCreditsFlowManage">
               <Icon type="ios-book"></Icon>
               <span>学分管理</span>
+            </MenuItem>
+            <MenuItem name="1-6" to="/studentFileManage">
+              <Icon type="ios-book"></Icon>
+              <span>学生档案管理</span>
             </MenuItem>
           </Menu>
         </Sider>
@@ -84,6 +88,13 @@ export default {
     collapsedSider() {
       this.$refs.side1.toggleCollapse();
     }
+    ,
+    loginOut() {
+      debugger
+      window.sessionStorage.removeItem("user");
+      let path = this.$route.query.redirect;
+      this.$router.replace((path == '/' || path == undefined) ? '/login' : path);
+    }
   }
 };
 </script>
@@ -118,7 +129,7 @@ export default {
 .menu-item span {
   display: inline-block;
   overflow: hidden;
-  width: 69px;
+  width: 120px;
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: bottom;

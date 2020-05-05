@@ -34,10 +34,19 @@ export default new Router({
           path: '/studentCreditsFlowManage',
           name: 'studentCreditsFlowManage',
           component: () => import('./views/studentCreditsFlowManage.vue')
+        },
+        {
+          path: '/studentFileManage',
+          name: 'studentFileManage',
+          component: () => import('./views/studentFileManage.vue')
         }
       ]
     },{
       path: '/',
+      name: 'login',
+      component: () => import('./views/login.vue'),
+    },{
+      path: '/login',
       name: 'login',
       component: () => import('./views/login.vue'),
     }

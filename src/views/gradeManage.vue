@@ -7,7 +7,7 @@
             <Table :columns="columns_name" :data="gradeList" style="margin-top: 10px"></Table>
             <div style="margin: 10px;overflow: hidden">
                 <div style="float: right;">
-                    <Page :total="total" :current="current" @on-change="changePage" show-total></Page>
+                    <Page :total="total" :current="current" :page-size ="pageSize" @on-change="changePage" show-total></Page>
                 </div>
             </div>
         </Card>
@@ -153,6 +153,7 @@
                 gradeList: [],
                 total: 0,
                 current: 1,
+                pageSize:10,
                 page_size_opts: [10, 20, 30, 40]
             }
         },
@@ -242,13 +243,14 @@
                     this.reload();
                 })
             },
-            changePage() {
+            changePage(current) {
+                debugger
                 let url = this.CommonUtil.LOCAL_BASE_URL + 'grade/list'
-                let params = {"current": this.current, "offset": 2}
+                let params = {"current": current, "offset": this.pageSize}
                 this.$http({
                     url: url,
                     method: 'get',
-                    data: params,
+                    params: params,
                     withCredentials: true,//表示跨域请求时是否需要使用凭证
                 }).then(res => {
                     if (res.data.status === '00000') {
@@ -265,7 +267,7 @@
         },
         mounted() {
             let url = this.CommonUtil.LOCAL_BASE_URL + 'grade/list'
-            let params = {"current": this.current, "offset": 2}
+            let params = {"current": this.current, "offset": this.pageSize}
             this.$http({
                 url: url,
                 method: 'get',
