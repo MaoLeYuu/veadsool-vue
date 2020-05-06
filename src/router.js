@@ -39,6 +39,11 @@ export default new Router({
           path: '/studentFileManage',
           name: 'studentFileManage',
           component: () => import('./views/studentFileManage.vue')
+        },
+        {
+          path: '/userManage',
+          name: 'userManage',
+          component: () => import('./views/userManage.vue')
         }
       ]
     },{

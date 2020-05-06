@@ -241,7 +241,6 @@
             },
             getRuleList(ruleType) {
                 //加载规则列表
-                debugger
                 let url = this.CommonUtil.LOCAL_BASE_URL + 'rules/list'
                 let params = {"ruleType": ruleType}
                 this.$http({
@@ -274,7 +273,7 @@
              * @param params
              */
             deleteStudent(params) {
-                let url = this.CommonUtil.LOCAL_BASE_URL + 'student/delete'
+                let url = this.CommonUtil.LOCAL_BASE_URL + 'studentCreditsFlow/delete'
                 let data = {
                     id: params.row.id,
                 }
@@ -301,11 +300,10 @@
                 this.editStudentCreditFlowFlowModal = true
             },
             editStudentFlow() {
-                let url = this.CommonUtil.LOCAL_BASE_URL + 'student/update'
+                let url = this.CommonUtil.LOCAL_BASE_URL + 'studentCreditsFlow/update'
                 let params = {
-                    studentNo: this.studentCreditFlowForm2.studentNo,
-                    studentName: this.studentCreditFlowForm2.studentName,
-                    gradeId: this.studentCreditFlowForm2.gradeId,
+                    studentId: this.studentCreditFlowForm2.studentId,
+                    ruleId: this.studentCreditFlowForm2.ruleId,
                     id: this.studentCreditFlowForm2.id,
                     updateUser: JSON.parse(window.sessionStorage.getItem("user")).id
                 }

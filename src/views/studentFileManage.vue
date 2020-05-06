@@ -45,6 +45,28 @@
                         sortable: true
                     },
                     {
+                        title: '总评价',
+                        key: 'memo',
+                        width: 100,
+                        align: 'center',
+                        render: (h, params) => {
+                        return h('div', [
+                            h('span', {
+                                style: {
+                                    display: 'inline-block',
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'nowrap'
+                                },
+                                domProps: {
+                                    title: params.row.memo
+                                }
+                            }, params.row.memo)
+                        ])
+                    }
+                    },
+                    {
                         title: '创建时间',
                         key: 'createTime',
                         render: function (h) {

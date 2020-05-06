@@ -244,7 +244,6 @@
                 })
             },
             changePage(current) {
-                debugger
                 let url = this.CommonUtil.LOCAL_BASE_URL + 'grade/list'
                 let params = {"current": current, "offset": this.pageSize}
                 this.$http({

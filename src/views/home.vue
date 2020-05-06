@@ -44,6 +44,10 @@
               <Icon type="ios-book"></Icon>
               <span>学生档案管理</span>
             </MenuItem>
+            <MenuItem name="1-7" to="/userManage">
+              <Icon type="ios-book"></Icon>
+              <span>人员管理</span>
+            </MenuItem>
           </Menu>
         </Sider>
         <Content>
